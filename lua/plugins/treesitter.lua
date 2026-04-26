@@ -1,11 +1,13 @@
-return{
+return {
     'nvim-treesitter/nvim-treesitter',
     lazy = false,
-    branch = "main",
     build = ":TSUpdate",
     config = function()
-        require('nvim-treesitter').install({ 'python', 'javascript', 'typescript', 'jsx', 'tsx', 'go', 'rust', 'html', 'css', 'lua', 'vim', 'c', 'cpp'})
         require('nvim-treesitter.config').setup({
+            ensure_installed = {
+                'python', 'javascript', 'typescript', 'jsx', 'tsx',
+                'go', 'rust', 'html', 'css', 'lua', 'vim', 'c', 'cpp'
+            },
             highlight = {
                 enable = true,
             },
@@ -13,5 +15,10 @@ return{
                 enable = true
             }
         })
+        vim.api.nvim_create_autocmd({ "BufReadPost", "BufNewFile" }, {
+            callback = function()
+                pcall(vim.treesitter.start)
+            end,
+        })
     end,
-} 
+}

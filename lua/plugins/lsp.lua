@@ -26,6 +26,13 @@ return {
 
             vim.lsp.config("clangd", {
                 capabilities = capabilities,
+                cmd = {
+                    "clangd",
+                    "--background-index",
+                    "--compile-commands-dir=.",
+                    "--extra-arg=-std=c++20",
+                    "--extra-arg=-Iinclude"
+                }
             })
             vim.lsp.enable("clangd")
         end
